@@ -1,5 +1,5 @@
 import { CardActivity } from '@/components/molecules/CardActivity'
-import React, { FC } from 'react'
+import React, { FC, memo } from 'react'
 
 interface Props {
   activities: {
@@ -19,4 +19,4 @@ const ActivityList: FC<Props> = ({ activities }) => {
   )
 }
 
-export default ActivityList
+export default memo(ActivityList)

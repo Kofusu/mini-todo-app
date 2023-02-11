@@ -10,3 +10,15 @@ export const getAllActivity = () => {
       .catch(() => reject(false))
   })
 }
+
+export const addActivity = () => {
+  return new Promise(async (resolve, reject) => {
+    axios
+      .post(activityEndpoint, {
+        title: 'New Activity',
+        email: 'wow@gmail.com',
+      })
+      .then((res) => resolve(res.data.data))
+      .catch(() => reject(false))
+  })
+}

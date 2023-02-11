@@ -4,7 +4,7 @@ import { GetStaticProps, NextPage } from 'next'
 import ActivityListPage from '@/components/templates/ActivityListPage'
 import { poppins300 } from '@/fonts/poppinsFont'
 import { getAllActivity } from '@/api/activity'
-import { useQuery } from 'react-query'
+import useActivity from '@/hooks/useActivity'
 interface Props {
   activities: {
     id: number
@@ -20,9 +20,7 @@ interface ActivitiesType {
 }
 
 const Home: NextPage<Props> = ({ activities }) => {
-  const { data: activityData } = useQuery('activities', getAllActivity, {
-    initialData: activities,
-  })
+  const { data: activityData, refetch, isFetching } = useActivity(activities)
 
   return (
     <>
@@ -33,7 +31,11 @@ const Home: NextPage<Props> = ({ activities }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={poppins300.className}>
-        <ActivityListPage activities={activityData as ActivitiesType[]} />
+        <ActivityListPage
+          activities={activityData as ActivitiesType[]}
+          refetch={refetch}
+          isFetching={isFetching}
+        />
       </main>
     </>
   )
