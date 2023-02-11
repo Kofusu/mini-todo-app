@@ -26,12 +26,12 @@ const CardActivity: FC<Props> = ({ activity }) => {
     <Link href={`/activity-groups/${activity.id}`}>
       <Card
         hoverable
-        className="p-0 h-[150px] max-w-[150px] md:h-[235px] md:max-w-[235px] shadow-customShadow relative"
+        className="h-[150px] max-w-[150px] md:h-[235px] md:max-w-[235px] shadow-customShadow relative"
       >
         <Title
           level={3}
           title={activity.title}
-          className={`${poppins400.className} text-sm md:text-xl`}
+          className={`${poppins400.className} text-sm md:text-xl absolute top-4 left-5 right-5 bottom-8`}
         />
         <DateIndonesia date={activity.created_at} />
         <HiOutlineTrash
