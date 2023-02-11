@@ -22,3 +22,12 @@ export const addActivity = () => {
       .catch(() => reject(false))
   })
 }
+
+export const removeActivity = (id: number) => {
+  return new Promise(async (resolve, reject) => {
+    axios
+      .delete(`${activityEndpoint}/${id}`)
+      .then((res) => resolve(res.data.data))
+      .catch(() => reject(false))
+  })
+}

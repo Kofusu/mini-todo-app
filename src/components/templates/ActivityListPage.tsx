@@ -55,7 +55,7 @@ const ActivityListPage: FC<Props> = ({ activities, refetch, isFetching }) => {
   return (
     <BaseContainer>
       <TitlePageSection onClick={addActivityHandler} />
-      <ActivityList activities={activities} />
+      <ActivityList activities={activities} refetch={refetch} />
       {isOnMessage && (
         <SuccessMessage
           message="Success"
