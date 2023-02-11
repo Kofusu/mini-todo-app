@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent } from 'react'
+import React, { FC, MouseEvent, useCallback, useEffect, useState } from 'react'
 import { Card } from 'antd'
 import Link from 'next/link'
 
@@ -6,7 +6,6 @@ import { Title } from '@/components/atoms/Title'
 import { poppins400 } from '@/fonts/poppinsFont'
 import { DateIndonesia } from '@/components/atoms/DateIndonesia'
 import { HiOutlineTrash } from 'react-icons/hi'
-import { removeActivity } from '@/api/activity'
 
 interface Props {
   activity: {
@@ -14,15 +13,15 @@ interface Props {
     title: string
     created_at: string
   }
-  refetch?: any
+  onRemove: (id: number) => void
 }
 
-const CardActivity: FC<Props> = ({ activity, refetch }) => {
-  const deleteHandler = (e: MouseEvent<SVGElement>) => {
+const CardActivity: FC<Props> = ({ activity, onRemove }) => {
+  const deleteHandler = useCallback((e: MouseEvent<SVGElement>) => {
     e.stopPropagation()
     e.preventDefault()
-    removeActivity(activity.id).then(() => refetch())
-  }
+    onRemove(activity.id)
+  }, [])
 
   return (
     <Link href={`/activity-groups/${activity.id}`}>

@@ -1,5 +1,5 @@
-import { addActivity } from '@/api/activity'
-import React, { FC, memo, useCallback, useState } from 'react'
+import { addActivity, removeActivity } from '@/api/activity'
+import React, { FC, memo, useCallback, useEffect, useState } from 'react'
 import SuccessMessage from '../atoms/AlertMessage/SuccessMessage'
 
 import { BaseContainer } from '../atoms/Container'
@@ -20,19 +20,42 @@ interface Props {
 
 const ActivityListPage: FC<Props> = ({ activities, refetch, isFetching }) => {
   const [isOnMessage, setIsOnMessage] = useState<boolean>(false)
+  const [isDelete, setIsDelete] = useState<boolean>(false)
 
   let timeout: any
 
-  const addActivityHandler = (): void => {
-    clearTimeout(timeout)
+  useEffect(() => {
+    return () => {
+      clearTimeout(timeout)
+    }
+  }, [])
+
+  const addActivityHandler = useCallback((): void => {
     addActivity().then(() => {
+      setIsDelete(false)
+      clearTimeout(timeout)
       setIsOnMessage(true)
       refetch()
       timeout = setTimeout(() => {
         setIsOnMessage(false)
       }, 10000)
     })
-  }
+  }, [setIsOnMessage, refetch, timeout, setIsDelete])
+
+  const removeActivityHandler = useCallback(
+    (id: number): void => {
+      removeActivity(id).then(() => {
+        setIsDelete(true)
+        clearTimeout(timeout)
+        setIsOnMessage(true)
+        refetch()
+        timeout = setTimeout(() => {
+          setIsOnMessage(false)
+        }, 10000)
+      })
+    },
+    [setIsOnMessage, refetch, timeout, setIsDelete]
+  )
 
   const closeHandler = useCallback(() => {
     clearTimeout(timeout)
@@ -55,11 +78,13 @@ const ActivityListPage: FC<Props> = ({ activities, refetch, isFetching }) => {
   return (
     <BaseContainer>
       <TitlePageSection onClick={addActivityHandler} />
-      <ActivityList activities={activities} refetch={refetch} />
+      <ActivityList activities={activities} onRemove={removeActivityHandler} />
       {isOnMessage && (
         <SuccessMessage
-          message="Success"
-          desc="'New Activitiy' added"
+          message="Action Success"
+          desc={
+            isDelete ? 'Deletion Activity Success' : '" New Activity " Added'
+          }
           onClose={closeHandler}
         />
       )}
