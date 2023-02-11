@@ -3,7 +3,8 @@ import { GetStaticProps, NextPage } from 'next'
 
 import ActivityListPage from '@/components/templates/ActivityListPage'
 import { poppins300 } from '@/fonts/poppinsFont'
-import { activityData } from '@/utils/dummyData'
+import { getAllActivity } from '@/api/activity'
+import { useQuery } from 'react-query'
 interface Props {
   activities: {
     id: number
@@ -12,7 +13,17 @@ interface Props {
   }[]
 }
 
+interface ActivitiesType {
+  id: number
+  title: string
+  created_at: string
+}
+
 const Home: NextPage<Props> = ({ activities }) => {
+  const { data: activityData } = useQuery('activities', getAllActivity, {
+    initialData: activities,
+  })
+
   return (
     <>
       <Head>
@@ -22,7 +33,7 @@ const Home: NextPage<Props> = ({ activities }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={poppins300.className}>
-        <ActivityListPage activities={activities} />
+        <ActivityListPage activities={activityData as ActivitiesType[]} />
       </main>
     </>
   )
@@ -31,9 +42,10 @@ const Home: NextPage<Props> = ({ activities }) => {
 export default Home
 
 export const getStaticProps: GetStaticProps = async () => {
+  const activities = await getAllActivity()
   return {
     props: {
-      activities: activityData,
+      activities: activities,
     },
     revalidate: 1,
   }
