@@ -5,18 +5,9 @@ import ActivityListPage from '@/components/templates/ActivityListPage'
 import { poppins300 } from '@/fonts/poppinsFont'
 import { getAllActivity } from '@/api/activity'
 import useActivity from '@/hooks/useActivity'
+import { ActivitiesType } from '@/utils/types'
 interface Props {
-  activities: {
-    id: number
-    title: string
-    created_at: string
-  }[]
-}
-
-interface ActivitiesType {
-  id: number
-  title: string
-  created_at: string
+  activities: ActivitiesType[]
 }
 
 const Home: NextPage<Props> = ({ activities }) => {

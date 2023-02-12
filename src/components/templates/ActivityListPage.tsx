@@ -1,4 +1,5 @@
 import { addActivity, removeActivity } from '@/api/activity'
+import { ActivitiesType } from '@/utils/types'
 import React, { FC, memo, useCallback, useEffect, useState } from 'react'
 import SuccessMessage from '../atoms/AlertMessage/SuccessMessage'
 
@@ -9,11 +10,7 @@ import { ActivityList } from '../organisms/ActivityList'
 import { TitlePageSection } from '../organisms/TitlePageSection'
 
 interface Props {
-  activities: {
-    id: number
-    title: string
-    created_at: string
-  }[]
+  activities: ActivitiesType[]
   refetch?: any
   isFetching: boolean
 }
@@ -69,7 +66,7 @@ const ActivityListPage: FC<Props> = ({ activities, refetch, isFetching }) => {
   if (activities.length <= 0) {
     return (
       <BaseContainer>
-        <TitlePageSection />
+        <TitlePageSection title="Activity" />
         <EmptyActivityState />
       </BaseContainer>
     )
@@ -77,7 +74,7 @@ const ActivityListPage: FC<Props> = ({ activities, refetch, isFetching }) => {
 
   return (
     <BaseContainer>
-      <TitlePageSection onClick={addActivityHandler} />
+      <TitlePageSection title="Activity" onClick={addActivityHandler} />
       <ActivityList activities={activities} onRemove={removeActivityHandler} />
       {isOnMessage && (
         <SuccessMessage

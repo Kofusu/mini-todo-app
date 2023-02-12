@@ -11,6 +11,15 @@ export const getAllActivity = () => {
   })
 }
 
+export const getOneActivity = (id: number) => {
+  return new Promise(async (resolve, reject) => {
+    axios
+      .get(`${activityEndpoint}/${id}`)
+      .then((res) => resolve(res.data))
+      .catch(() => reject(false))
+  })
+}
+
 export const addActivity = () => {
   return new Promise(async (resolve, reject) => {
     axios
