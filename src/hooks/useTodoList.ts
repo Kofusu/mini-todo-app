@@ -4,13 +4,12 @@ import { useQuery } from 'react-query'
 import { ActivityDetailType } from '@/utils/types'
 
 const useTodo = (activityDetail: ActivityDetailType) => {
-  const query = useQuery(
-    `todo-${activityDetail.id}`,
-    () => getOneActivity(activityDetail.id),
-    {
-      initialData: activityDetail,
-    }
-  )
+  const getActivity = () => {
+    return getOneActivity(activityDetail.id)
+  }
+  const query = useQuery(`todo-${activityDetail.id}`, getActivity, {
+    initialData: activityDetail,
+  })
 
   return { ...query }
 }

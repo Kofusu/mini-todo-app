@@ -3,9 +3,13 @@ import Image from 'next/image'
 
 import EmptyListImage from '@/assets/img/todo-empty-state.png'
 
-const EmptyListState: FC = () => {
+interface Props {
+  onClick?: () => void
+}
+
+const EmptyListState: FC<Props> = ({ onClick }) => {
   return (
-    <div className="pt-12">
+    <div className="pt-12" onClick={onClick}>
       <Image src={EmptyListImage} alt="Empty To Do List" />
     </div>
   )

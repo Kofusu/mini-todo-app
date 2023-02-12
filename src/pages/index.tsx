@@ -6,6 +6,7 @@ import { poppins300 } from '@/fonts/poppinsFont'
 import { getAllActivity } from '@/api/activity'
 import useActivity from '@/hooks/useActivity'
 import { ActivitiesType } from '@/utils/types'
+import { PageLoading } from '@/components/atoms/PageLoading'
 interface Props {
   activities: ActivitiesType[]
 }
@@ -25,8 +26,8 @@ const Home: NextPage<Props> = ({ activities }) => {
         <ActivityListPage
           activities={activityData as ActivitiesType[]}
           refetch={refetch}
-          isFetching={isFetching}
         />
+        {isFetching && <PageLoading />}
       </main>
     </>
   )

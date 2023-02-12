@@ -7,6 +7,7 @@ import { getAllActivity, getOneActivity } from '@/api/activity'
 import useTodo from '@/hooks/useTodoList'
 import ActivityDetailPage from '@/components/templates/ActivityDetailPage'
 import { ActivitiesType, ActivityDetailType } from '@/utils/types'
+import { PageLoading } from '@/components/atoms/PageLoading'
 
 interface Props {
   activityDetail: ActivitiesType
@@ -33,10 +34,11 @@ const ActivityDetail: NextPage<Props> = ({ activityDetail }) => {
       </Head>
       <main className={poppins300.className}>
         <ActivityDetailPage
-          activityDetail={activity as ActivityDetailType}
+          activity={activity as ActivityDetailType}
           refetch={refetch}
           isFetching={isFetching}
         />
+        {isFetching && <PageLoading />}
       </main>
     </>
   )

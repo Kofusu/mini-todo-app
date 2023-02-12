@@ -4,7 +4,6 @@ import React, { FC, memo, useCallback, useEffect, useState } from 'react'
 import SuccessMessage from '../atoms/AlertMessage/SuccessMessage'
 
 import { BaseContainer } from '../atoms/Container'
-import { PageLoading } from '../atoms/PageLoading'
 import { EmptyActivityState } from '../molecules/EmptyStateImage'
 import { ActivityList } from '../organisms/ActivityList'
 import { TitlePageSection } from '../organisms/TitlePageSection'
@@ -12,10 +11,9 @@ import { TitlePageSection } from '../organisms/TitlePageSection'
 interface Props {
   activities: ActivitiesType[]
   refetch?: any
-  isFetching: boolean
 }
 
-const ActivityListPage: FC<Props> = ({ activities, refetch, isFetching }) => {
+const ActivityListPage: FC<Props> = ({ activities, refetch }) => {
   const [isOnMessage, setIsOnMessage] = useState<boolean>(false)
   const [isDelete, setIsDelete] = useState<boolean>(false)
 
@@ -25,7 +23,7 @@ const ActivityListPage: FC<Props> = ({ activities, refetch, isFetching }) => {
     return () => {
       clearTimeout(timeout)
     }
-  }, [])
+  }, [timeout])
 
   const addActivityHandler = useCallback((): void => {
     addActivity().then(() => {
@@ -58,10 +56,6 @@ const ActivityListPage: FC<Props> = ({ activities, refetch, isFetching }) => {
     clearTimeout(timeout)
     setIsOnMessage(false)
   }, [setIsOnMessage])
-
-  if (isFetching) {
-    return <PageLoading />
-  }
 
   if (activities.length <= 0) {
     return (

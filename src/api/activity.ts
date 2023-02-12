@@ -32,6 +32,17 @@ export const addActivity = () => {
   })
 }
 
+export const updateActivity = (id: number, title: string) => {
+  return new Promise(async (resolve, reject) => {
+    axios
+      .patch(`${activityEndpoint}/${id}`, {
+        title,
+      })
+      .then((res) => resolve(res.data.data))
+      .catch(() => reject(false))
+  })
+}
+
 export const removeActivity = (id: number) => {
   return new Promise(async (resolve, reject) => {
     axios
