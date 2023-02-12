@@ -18,11 +18,9 @@ interface IParams extends ParsedUrlQuery {
 }
 
 const ActivityDetail: NextPage<Props> = ({ activityDetail }) => {
-  const {
-    data: activity,
-    refetch,
-    isFetching,
-  } = useTodo(activityDetail as ActivityDetailType)
+  const { data: activity, isFetching } = useTodo(
+    activityDetail as ActivityDetailType
+  )
 
   return (
     <>
@@ -33,11 +31,7 @@ const ActivityDetail: NextPage<Props> = ({ activityDetail }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={poppins300.className}>
-        <ActivityDetailPage
-          activity={activity as ActivityDetailType}
-          refetch={refetch}
-          isFetching={isFetching}
-        />
+        <ActivityDetailPage activity={activity as ActivityDetailType} />
         {isFetching && <PageLoading />}
       </main>
     </>

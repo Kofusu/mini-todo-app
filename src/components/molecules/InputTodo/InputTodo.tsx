@@ -11,23 +11,51 @@ import { HiOutlinePencil } from 'react-icons/hi'
 import { AiOutlineLeft } from 'react-icons/ai'
 import Link from 'next/link'
 import { PageLoading } from '@/components/atoms/PageLoading'
+import { updateActivity } from '@/api/activity'
+import { ActivityDetailType } from '@/utils/types'
 
 interface Props {
-  value: string
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void
-  onFinishTitle: (value: string) => void
+  activity: ActivityDetailType
 }
 
-const InputTodo: FC<Props> = ({ value, onChange, onFinishTitle }) => {
+const InputTodo: FC<Props> = ({ activity }) => {
   const [isFocusInput, setIsFocusInput] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isInputTouched, setIsInputTouched] = useState<boolean>(false)
+  const [inputTitle, setInputTitle] = useState<string>(activity.title)
+
   const inputRef = useRef<InputRef>(null)
+
+  let timeout: any
 
   useEffect(() => {
     return () => {
+      clearTimeout(timeout)
       setIsLoading(false)
     }
-  }, [setIsLoading])
+  }, [timeout, setIsLoading])
+
+  const sendUpdateTitle = useCallback(
+    (value: string) => {
+      updateActivity(activity.id, value)
+    },
+    [updateActivity]
+  )
+
+  const changeHandler = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const { value } = e.target
+      setIsInputTouched(true)
+
+      setInputTitle(value)
+      clearTimeout(timeout)
+
+      timeout = setTimeout(() => {
+        updateActivity(activity.id, value)
+      }, 2000)
+    },
+    [setInputTitle, timeout]
+  )
 
   const clickHandler = useCallback(() => {
     setIsFocusInput(true)
@@ -43,7 +71,7 @@ const InputTodo: FC<Props> = ({ value, onChange, onFinishTitle }) => {
   }, [setIsFocusInput])
 
   const focusOff = useCallback(() => {
-    onFinishTitle(value)
+    sendUpdateTitle(inputTitle)
     setIsFocusInput(false)
   }, [setIsFocusInput])
 
@@ -66,8 +94,8 @@ const InputTodo: FC<Props> = ({ value, onChange, onFinishTitle }) => {
           onFocus={focusOn}
           onBlur={focusOff}
           ref={inputRef}
-          value={value}
-          onChange={onChange}
+          value={isInputTouched ? inputTitle : activity.title}
+          onChange={changeHandler}
           maxLength={20}
           className={`bg-inherit focus:shadow-none border-none text-lg md:text-4xl px-0 md:mx-4 focus:border-b-0 ${
             isFocusInput ? 'md:w-96' : 'md:w-56'

@@ -2,26 +2,17 @@ import React, { ChangeEvent, FC, memo } from 'react'
 
 import { InputTodo } from '@/components/molecules/InputTodo'
 import { AddButton } from '@/components/molecules/AddButton'
+import { ActivityDetailType } from '@/utils/types'
 
 interface Props {
-  value: string
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void
+  activity: ActivityDetailType
   onClick?: () => void
-  onFinishTitle: (value: string) => void
 }
 
-const InputTitlePageSection: FC<Props> = ({
-  value,
-  onChange,
-  onFinishTitle,
-}) => {
+const InputTitlePageSection: FC<Props> = ({ activity }) => {
   return (
     <div className="flex flex-wrap md:flex-nowrap justify-end md:justify-between md:mt-8">
-      <InputTodo
-        onFinishTitle={onFinishTitle}
-        value={value}
-        onChange={onChange}
-      />
+      <InputTodo activity={activity} />
       <AddButton />
     </div>
   )
