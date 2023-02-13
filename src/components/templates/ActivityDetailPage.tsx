@@ -2,6 +2,7 @@ import { updateActivity } from '@/api/activity'
 import { ActivityDetailType } from '@/utils/types'
 import React, { FC, memo, useCallback } from 'react'
 import { BaseContainer } from '../atoms/Container'
+import { EmptyListState } from '../molecules/EmptyStateImage'
 import { InputTitlePageSection } from '../organisms/TitlePageSection'
 import { TodoList } from '../organisms/TodoList'
 
@@ -11,7 +12,15 @@ interface Props {
 
 const ActivityDetailPage: FC<Props> = ({ activity }) => {
   const clickHandler = useCallback(() => {}, [])
-  console.log(activity)
+
+  if (activity.todo_items.length <= 0) {
+    return (
+      <BaseContainer>
+        <InputTitlePageSection activity={activity} onClick={clickHandler} />
+        <EmptyListState />
+      </BaseContainer>
+    )
+  }
 
   return (
     <BaseContainer>
