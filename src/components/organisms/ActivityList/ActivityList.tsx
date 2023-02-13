@@ -1,12 +1,9 @@
 import { CardActivity } from '@/components/molecules/CardActivity'
+import { ActivitiesType } from '@/utils/types'
 import React, { FC, memo } from 'react'
 
 interface Props {
-  activities: {
-    id: number
-    title: string
-    created_at: string
-  }[]
+  activities: ActivitiesType[]
   onRemove: (id: number) => void
 }
 

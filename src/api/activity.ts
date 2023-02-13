@@ -11,12 +11,32 @@ export const getAllActivity = () => {
   })
 }
 
+export const getOneActivity = (id: number) => {
+  return new Promise(async (resolve, reject) => {
+    axios
+      .get(`${activityEndpoint}/${id}`)
+      .then((res) => resolve(res.data))
+      .catch(() => reject(false))
+  })
+}
+
 export const addActivity = () => {
   return new Promise(async (resolve, reject) => {
     axios
       .post(activityEndpoint, {
         title: 'New Activity',
         email: 'wow@gmail.com',
+      })
+      .then((res) => resolve(res.data.data))
+      .catch(() => reject(false))
+  })
+}
+
+export const updateActivity = (id: number, title: string) => {
+  return new Promise(async (resolve, reject) => {
+    axios
+      .patch(`${activityEndpoint}/${id}`, {
+        title,
       })
       .then((res) => resolve(res.data.data))
       .catch(() => reject(false))

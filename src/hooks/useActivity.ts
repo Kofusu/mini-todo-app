@@ -1,11 +1,7 @@
-import { getAllActivity } from '@/api/activity'
 import { useQuery } from 'react-query'
 
-interface ActivitiesType {
-  id: number
-  title: string
-  created_at: string
-}
+import { getAllActivity } from '@/api/activity'
+import { ActivitiesType } from '@/utils/types'
 
 const useActivity = (activities: ActivitiesType[]) => {
   const query = useQuery('activities', getAllActivity, {

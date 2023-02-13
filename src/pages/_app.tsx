@@ -5,13 +5,7 @@ import { ReactQueryDevtools } from 'react-query/devtools'
 
 import '@/styles/globals.css'
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 15 * 1000,
-    },
-  },
-})
+const queryClient = new QueryClient()
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

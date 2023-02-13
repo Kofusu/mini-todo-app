@@ -8,8 +8,8 @@ interface Props {
 
 const AddButton: FC<Props> = ({ onClick }) => {
   return (
-    <PrimaryButton onClick={onClick}>
-      <span className="mr-[6px] md:mr-3">+</span>
+    <PrimaryButton onClick={onClick} className="my-2">
+      <span className="mr-[6px] md:mr-3 flex-1">+</span>
       <span>Tambah</span>
     </PrimaryButton>
   )

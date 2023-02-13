@@ -1,24 +1,19 @@
 import { addActivity, removeActivity } from '@/api/activity'
+import { ActivitiesType } from '@/utils/types'
 import React, { FC, memo, useCallback, useEffect, useState } from 'react'
 import SuccessMessage from '../atoms/AlertMessage/SuccessMessage'
 
 import { BaseContainer } from '../atoms/Container'
-import { PageLoading } from '../atoms/PageLoading'
 import { EmptyActivityState } from '../molecules/EmptyStateImage'
 import { ActivityList } from '../organisms/ActivityList'
 import { TitlePageSection } from '../organisms/TitlePageSection'
 
 interface Props {
-  activities: {
-    id: number
-    title: string
-    created_at: string
-  }[]
+  activities: ActivitiesType[]
   refetch?: any
-  isFetching: boolean
 }
 
-const ActivityListPage: FC<Props> = ({ activities, refetch, isFetching }) => {
+const ActivityListPage: FC<Props> = ({ activities, refetch }) => {
   const [isOnMessage, setIsOnMessage] = useState<boolean>(false)
   const [isDelete, setIsDelete] = useState<boolean>(false)
 
@@ -28,9 +23,9 @@ const ActivityListPage: FC<Props> = ({ activities, refetch, isFetching }) => {
     return () => {
       clearTimeout(timeout)
     }
-  }, [])
+  }, [timeout])
 
-  const addActivityHandler = useCallback((): void => {
+  const addActivityHandler = (): void => {
     addActivity().then(() => {
       setIsDelete(false)
       clearTimeout(timeout)
@@ -40,36 +35,29 @@ const ActivityListPage: FC<Props> = ({ activities, refetch, isFetching }) => {
         setIsOnMessage(false)
       }, 10000)
     })
-  }, [setIsOnMessage, refetch, timeout, setIsDelete])
+  }
 
-  const removeActivityHandler = useCallback(
-    (id: number): void => {
-      removeActivity(id).then(() => {
-        setIsDelete(true)
-        clearTimeout(timeout)
-        setIsOnMessage(true)
-        refetch()
-        timeout = setTimeout(() => {
-          setIsOnMessage(false)
-        }, 10000)
-      })
-    },
-    [setIsOnMessage, refetch, timeout, setIsDelete]
-  )
+  const removeActivityHandler = (id: number): void => {
+    removeActivity(id).then(() => {
+      setIsDelete(true)
+      clearTimeout(timeout)
+      setIsOnMessage(true)
+      refetch()
+      timeout = setTimeout(() => {
+        setIsOnMessage(false)
+      }, 10000)
+    })
+  }
 
-  const closeHandler = useCallback(() => {
+  const closeHandler = () => {
     clearTimeout(timeout)
     setIsOnMessage(false)
-  }, [setIsOnMessage])
-
-  if (isFetching) {
-    return <PageLoading />
   }
 
   if (activities.length <= 0) {
     return (
       <BaseContainer>
-        <TitlePageSection />
+        <TitlePageSection title="Activity" />
         <EmptyActivityState />
       </BaseContainer>
     )
@@ -77,7 +65,7 @@ const ActivityListPage: FC<Props> = ({ activities, refetch, isFetching }) => {
 
   return (
     <BaseContainer>
-      <TitlePageSection onClick={addActivityHandler} />
+      <TitlePageSection title="Activity" onClick={addActivityHandler} />
       <ActivityList activities={activities} onRemove={removeActivityHandler} />
       {isOnMessage && (
         <SuccessMessage
