@@ -56,6 +56,7 @@ const ActivityDetailPage: FC<Props> = ({ activity, refetch }) => {
         onSubmit={submitHandler}
         isOpen={isModalOpen}
         onClose={closeModal}
+        autoClear
       />
     </BaseContainer>
   )

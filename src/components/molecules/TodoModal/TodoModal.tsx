@@ -8,9 +8,17 @@ interface Props {
   isOpen?: boolean
   name?: string
   prior?: string
+  autoClear?: boolean
 }
 
-const TodoModal: FC<Props> = ({ isOpen, onSubmit, onClose, name, prior }) => {
+const TodoModal: FC<Props> = ({
+  isOpen,
+  onSubmit,
+  onClose,
+  name,
+  prior,
+  autoClear,
+}) => {
   const [inputName, setInputName] = useState<string>(name || '')
   const [inputPriority, setInputPriority] = useState<string>(
     prior || 'very-high'
@@ -26,6 +34,11 @@ const TodoModal: FC<Props> = ({ isOpen, onSubmit, onClose, name, prior }) => {
 
   const submitHandler = () => {
     onSubmit(inputName, inputPriority)
+    if (autoClear) {
+      setInputName('')
+      setInputPriority('very-high')
+      return
+    }
     setInputName(inputName || '')
     setInputPriority(inputPriority || 'very-high')
   }

@@ -2,11 +2,12 @@ import { deleteTodo, updateCheckedTodo, updateTodo } from '@/api/todo'
 import { CustomCheckbox } from '@/components/atoms/Input'
 import { Title } from '@/components/atoms/Title'
 import { TodoItemsType } from '@/utils/types'
-import { Card, Checkbox, Col } from 'antd'
+import { Card, Col, Modal } from 'antd'
 import { CheckboxChangeEvent } from 'antd/es/checkbox'
 import React, { FC, memo, useCallback, useState } from 'react'
 import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
 import { TodoModal } from '../TodoModal'
+import { DeleteModal } from '@/components/atoms/DeleteModal'
 
 interface Props {
   todoItem: TodoItemsType
@@ -14,6 +15,7 @@ interface Props {
 }
 
 const CardTodo: FC<Props> = ({ todoItem, refetch }) => {
+  const [isModalConfirmOpen, setIsModalConfirmOpen] = useState<boolean>(false)
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [checkBoxStatus, setCheckboxStatus] = useState<boolean>(
     todoItem.is_active === 0
@@ -48,8 +50,17 @@ const CardTodo: FC<Props> = ({ todoItem, refetch }) => {
   )
 
   const deleteTodoHandler = useCallback(() => {
-    deleteTodo(todoItem.id).then(() => {
-      refetch()
+    Modal.confirm({
+      content: <DeleteModal title={todoItem?.title} />,
+      open: isModalConfirmOpen,
+      onCancel: () => setIsModalConfirmOpen(false),
+      onOk: () => {
+        setIsModalConfirmOpen(false)
+        deleteTodo(todoItem?.id).then(() => {
+          refetch()
+        })
+      },
+      okButtonProps: { className: 'bg-customBlue hover:bg-blue-500' },
     })
   }, [refetch])
 
