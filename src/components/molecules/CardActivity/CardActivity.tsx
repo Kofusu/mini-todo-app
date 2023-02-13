@@ -48,7 +48,7 @@ const CardActivity: FC<Props> = ({ activity, onRemove }) => {
           <DateIndonesia date={activity.created_at} />
           <HiOutlineTrash
             onClick={deleteHandler}
-            className="absolute md:scale-[1.75] bottom-[18px] md:bottom-6 right-4 md:right-6 hover:text-red-500"
+            className="text-slate-400 absolute md:scale-[1.75] bottom-[18px] md:bottom-6 right-4 md:right-6 cursor-pointer hover:text-red-500"
           />
         </Card>
       </Link>

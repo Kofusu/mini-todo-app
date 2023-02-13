@@ -85,8 +85,8 @@ const InputTodo: FC<Props> = ({ activity }) => {
         <AiOutlineLeft className="md:scale-[2.75] hidden md:inline-block cursor-pointer" />
       </Link>
       <Input.Group
-        className={`mx-2 border-slate-400 ${
-          isFocusInput ? 'md:border-b-2' : 'md:border-b-0'
+        className={`mx-2 border-b-2 ${
+          isFocusInput ? 'md:border-slate-400' : 'md:border-none'
         }`}
       >
         <Input

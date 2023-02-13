@@ -15,7 +15,7 @@ const DateIndonesia: FC<Props> = ({ date, className }) => {
 
   return (
     <span
-      className={`${className} absolute bottom-4 left-5 opacity-60 text-[0.55rem] md:text-base`}
+      className={`${className} absolute bottom-4 left-5 text-slate-400 text-[0.55rem] md:text-base`}
     >
       {dateFormat}
     </span>
