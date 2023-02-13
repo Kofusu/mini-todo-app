@@ -1,5 +1,5 @@
 import React, { FC, MouseEvent, useCallback, useEffect, useState } from 'react'
-import { Card } from 'antd'
+import { Card, Modal } from 'antd'
 import Link from 'next/link'
 
 import { Title } from '@/components/atoms/Title'
@@ -8,6 +8,7 @@ import { DateIndonesia } from '@/components/atoms/DateIndonesia'
 import { HiOutlineTrash } from 'react-icons/hi'
 import { ActivitiesType } from '@/utils/types'
 import { PageLoading } from '@/components/atoms/PageLoading'
+import { DeleteModal } from '@/components/atoms/DeleteModal'
 
 interface Props {
   activity: ActivitiesType
@@ -16,6 +17,7 @@ interface Props {
 
 const CardActivity: FC<Props> = ({ activity, onRemove }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isModalConfirmOpen, setIsModalConfirmOpen] = useState<boolean>(false)
 
   useEffect(() => {
     return () => {
@@ -31,7 +33,16 @@ const CardActivity: FC<Props> = ({ activity, onRemove }) => {
     (e: MouseEvent<SVGElement>) => {
       e.stopPropagation()
       e.preventDefault()
-      onRemove(activity.id)
+      Modal.confirm({
+        content: <DeleteModal title={activity.title} />,
+        open: isModalConfirmOpen,
+        onCancel: () => setIsModalConfirmOpen(false),
+        onOk: () => {
+          setIsModalConfirmOpen(false)
+          onRemove(activity.id)
+        },
+        okButtonProps: { className: 'bg-customBlue hover:bg-blue-500' },
+      })
     },
     [activity.id, onRemove]
   )
