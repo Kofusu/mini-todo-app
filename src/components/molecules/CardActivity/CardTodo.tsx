@@ -22,7 +22,6 @@ const CardTodo: FC<Props> = ({ todoItem, refetch }) => {
 
   const openModal = useCallback(() => {
     setIsModalOpen(true)
-    console.log('helo')
   }, [setIsModalOpen])
 
   const closeModal = useCallback(() => {
