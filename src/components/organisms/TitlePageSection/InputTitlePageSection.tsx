@@ -9,11 +9,11 @@ interface Props {
   onClick?: () => void
 }
 
-const InputTitlePageSection: FC<Props> = ({ activity }) => {
+const InputTitlePageSection: FC<Props> = ({ activity, onClick }) => {
   return (
     <div className="flex flex-wrap md:flex-nowrap justify-end md:justify-between md:mt-8">
       <InputTodo activity={activity} />
-      <AddButton />
+      <AddButton onClick={onClick} />
     </div>
   )
 }

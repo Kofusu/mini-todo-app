@@ -9,7 +9,7 @@ interface Props {
 
 const EmptyActivityState: FC<Props> = ({ onClick }) => {
   return (
-    <div className="pt-12" onClick={onClick}>
+    <div className="pt-12 cursor-pointer" onClick={onClick}>
       <Image src={EmptyActivityImage} alt="Empty To Do List" />
     </div>
   )

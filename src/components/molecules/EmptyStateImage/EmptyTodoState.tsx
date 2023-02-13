@@ -9,7 +9,10 @@ interface Props {
 
 const EmptyListState: FC<Props> = ({ onClick }) => {
   return (
-    <div className="pt-12 flex justify-center items-center" onClick={onClick}>
+    <div
+      className="pt-12 flex justify-center items-center cursor-pointer"
+      onClick={onClick}
+    >
       <Image src={EmptyListImage} alt="Empty To Do List" />
     </div>
   )

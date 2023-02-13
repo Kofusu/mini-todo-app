@@ -10,7 +10,7 @@ import { ActivitiesType, ActivityDetailType } from '@/utils/types'
 import { PageLoading } from '@/components/atoms/PageLoading'
 
 interface Props {
-  activityDetail: ActivitiesType
+  activityDetail: ActivityDetailType
 }
 
 interface IParams extends ParsedUrlQuery {
@@ -18,6 +18,7 @@ interface IParams extends ParsedUrlQuery {
 }
 
 const ActivityDetail: NextPage<Props> = ({ activityDetail }) => {
+  const { data: activityData, refetch, isFetching } = useTodo(activityDetail)
   return (
     <>
       <Head>
@@ -27,7 +28,11 @@ const ActivityDetail: NextPage<Props> = ({ activityDetail }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={poppins300.className}>
-        <ActivityDetailPage activity={activityDetail as ActivityDetailType} />
+        <ActivityDetailPage
+          refetch={refetch}
+          activity={activityData as ActivityDetailType}
+        />
+        {isFetching && <PageLoading />}
       </main>
     </>
   )
