@@ -13,6 +13,7 @@ import Link from 'next/link'
 import { PageLoading } from '@/components/atoms/PageLoading'
 import { updateActivity } from '@/api/activity'
 import { ActivityDetailType } from '@/utils/types'
+import { useRouter } from 'next/router'
 
 interface Props {
   activity: ActivityDetailType
@@ -23,6 +24,7 @@ const InputTodo: FC<Props> = ({ activity }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isInputTouched, setIsInputTouched] = useState<boolean>(false)
   const [inputTitle, setInputTitle] = useState<string>(activity.title)
+  const router = useRouter()
 
   const inputRef = useRef<InputRef>(null)
 
@@ -61,7 +63,8 @@ const InputTodo: FC<Props> = ({ activity }) => {
 
   const displayLoading = useCallback(() => {
     setIsLoading(true)
-  }, [setIsLoading])
+    router.back()
+  }, [setIsLoading, router])
 
   const focusOn = useCallback(() => {
     setIsFocusInput(true)
@@ -78,9 +81,9 @@ const InputTodo: FC<Props> = ({ activity }) => {
 
   return (
     <div className="flex items-center justify-between w-full border-slate-400 border-b-2 md:border-b-0 md:mr-8 my-2 md:w-fit">
-      <Link href="/" onClick={displayLoading}>
+      <div onClick={displayLoading}>
         <AiOutlineLeft className="md:scale-[2.75] hidden md:inline-block cursor-pointer" />
-      </Link>
+      </div>
       <Input.Group
         className={`mx-2 border-b-2 ${
           isFocusInput ? 'md:border-slate-400' : 'md:border-none'
