@@ -39,28 +39,25 @@ const InputTodo: FC<Props> = ({ activity }) => {
     (value: string) => {
       updateActivity(activity.id, value)
     },
-    [updateActivity]
+    [activity.id]
   )
 
-  const changeHandler = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const { value } = e.target
-      setIsInputTouched(true)
+  const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target
+    setIsInputTouched(true)
 
-      setInputTitle(value)
-      clearTimeout(timeout)
+    setInputTitle(value)
+    clearTimeout(timeout)
 
-      timeout = setTimeout(() => {
-        updateActivity(activity.id, value)
-      }, 2000)
-    },
-    [setInputTitle, timeout]
-  )
+    timeout = setTimeout(() => {
+      updateActivity(activity.id, value)
+    }, 2000)
+  }
 
   const clickHandler = useCallback(() => {
     setIsFocusInput(true)
     inputRef.current?.focus()
-  }, [inputRef])
+  }, [inputRef, setIsFocusInput])
 
   const displayLoading = useCallback(() => {
     setIsLoading(true)
@@ -73,11 +70,11 @@ const InputTodo: FC<Props> = ({ activity }) => {
   const focusOff = useCallback(() => {
     sendUpdateTitle(inputTitle)
     setIsFocusInput(false)
-  }, [setIsFocusInput])
+  }, [setIsFocusInput, sendUpdateTitle, inputTitle])
 
   const onEnter = useCallback(() => {
     inputRef.current?.blur()
-  }, [])
+  }, [inputRef])
 
   return (
     <div className="flex items-center justify-between w-full border-slate-400 border-b-2 md:border-b-0 md:mr-8 my-2 md:w-fit">

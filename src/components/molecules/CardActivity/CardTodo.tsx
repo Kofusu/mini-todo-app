@@ -23,7 +23,7 @@ const CardTodo: FC<Props> = ({ todoItem }) => {
       setCheckboxStatus(e.target.checked)
       setIsTouched(true)
     },
-    [updateCheckedTodo, setCheckboxStatus, setIsTouched]
+    [setCheckboxStatus, setIsTouched, todoItem.id]
   )
 
   const getColorPriority = useCallback(() => {

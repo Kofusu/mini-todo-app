@@ -25,7 +25,7 @@ const ActivityListPage: FC<Props> = ({ activities, refetch }) => {
     }
   }, [timeout])
 
-  const addActivityHandler = useCallback((): void => {
+  const addActivityHandler = (): void => {
     addActivity().then(() => {
       setIsDelete(false)
       clearTimeout(timeout)
@@ -35,27 +35,24 @@ const ActivityListPage: FC<Props> = ({ activities, refetch }) => {
         setIsOnMessage(false)
       }, 10000)
     })
-  }, [setIsOnMessage, refetch, timeout, setIsDelete])
+  }
 
-  const removeActivityHandler = useCallback(
-    (id: number): void => {
-      removeActivity(id).then(() => {
-        setIsDelete(true)
-        clearTimeout(timeout)
-        setIsOnMessage(true)
-        refetch()
-        timeout = setTimeout(() => {
-          setIsOnMessage(false)
-        }, 10000)
-      })
-    },
-    [setIsOnMessage, refetch, timeout, setIsDelete]
-  )
+  const removeActivityHandler = (id: number): void => {
+    removeActivity(id).then(() => {
+      setIsDelete(true)
+      clearTimeout(timeout)
+      setIsOnMessage(true)
+      refetch()
+      timeout = setTimeout(() => {
+        setIsOnMessage(false)
+      }, 10000)
+    })
+  }
 
-  const closeHandler = useCallback(() => {
+  const closeHandler = () => {
     clearTimeout(timeout)
     setIsOnMessage(false)
-  }, [setIsOnMessage])
+  }
 
   if (activities.length <= 0) {
     return (

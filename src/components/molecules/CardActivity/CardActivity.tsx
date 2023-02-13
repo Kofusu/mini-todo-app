@@ -27,11 +27,14 @@ const CardActivity: FC<Props> = ({ activity, onRemove }) => {
     setIsLoading(true)
   }, [setIsLoading])
 
-  const deleteHandler = useCallback((e: MouseEvent<SVGElement>) => {
-    e.stopPropagation()
-    e.preventDefault()
-    onRemove(activity.id)
-  }, [])
+  const deleteHandler = useCallback(
+    (e: MouseEvent<SVGElement>) => {
+      e.stopPropagation()
+      e.preventDefault()
+      onRemove(activity.id)
+    },
+    [activity.id, onRemove]
+  )
 
   return (
     <>
