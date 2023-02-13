@@ -1,4 +1,4 @@
-import { updateCheckedTodo, updateTodo } from '@/api/todo'
+import { deleteTodo, updateCheckedTodo, updateTodo } from '@/api/todo'
 import { CustomCheckbox } from '@/components/atoms/Input'
 import { Title } from '@/components/atoms/Title'
 import { TodoItemsType } from '@/utils/types'
@@ -48,6 +48,12 @@ const CardTodo: FC<Props> = ({ todoItem, refetch }) => {
     [closeModal, refetch, todoItem?.id]
   )
 
+  const deleteTodoHandler = useCallback(() => {
+    deleteTodo(todoItem.id).then(() => {
+      refetch()
+    })
+  }, [refetch])
+
   const getColorPriority = useCallback(() => {
     switch (todoItem.priority) {
       case 'very-low':
@@ -90,7 +96,10 @@ const CardTodo: FC<Props> = ({ todoItem, refetch }) => {
               className="mr-2 text-slate-500 scale-125 md:scale-150 cursor-pointer"
             />
           </div>
-          <HiOutlineTrash className="text-slate-400 scale-125 md:scale-150 hover:text-red-500 cursor-pointer" />
+          <HiOutlineTrash
+            onClick={deleteTodoHandler}
+            className="text-slate-400 scale-125 md:scale-150 hover:text-red-500 cursor-pointer"
+          />
         </div>
       </Card>
       <TodoModal

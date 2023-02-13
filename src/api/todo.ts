@@ -49,7 +49,7 @@ export const updateTodo = (
 export const deleteTodo = (activityId: number) => {
   return new Promise(async (resolve, reject) => {
     axios
-      .delete(todoEndpoint)
+      .delete(`${todoEndpoint}/${activityId}`)
       .then((res) => resolve(res.data.data))
       .catch(() => reject(false))
   })
