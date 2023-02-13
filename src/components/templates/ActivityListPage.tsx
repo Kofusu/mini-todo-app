@@ -38,10 +38,10 @@ const ActivityListPage: FC<Props> = ({ activities, refetch }) => {
   }
 
   const removeActivityHandler = (id: number): void => {
+    setIsDelete(true)
+    setIsOnMessage(true)
     removeActivity(id).then(() => {
-      setIsDelete(true)
       clearTimeout(timeout)
-      setIsOnMessage(true)
       refetch()
       timeout = setTimeout(() => {
         setIsOnMessage(false)
