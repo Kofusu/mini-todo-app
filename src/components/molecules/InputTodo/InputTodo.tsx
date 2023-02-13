@@ -23,7 +23,7 @@ const InputTodo: FC<Props> = ({ activity }) => {
   const [isFocusInput, setIsFocusInput] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isInputTouched, setIsInputTouched] = useState<boolean>(false)
-  const [inputTitle, setInputTitle] = useState<string>(activity.title)
+  const [inputTitle, setInputTitle] = useState<string>(activity?.title)
   const router = useRouter()
 
   const inputRef = useRef<InputRef>(null)
@@ -39,9 +39,9 @@ const InputTodo: FC<Props> = ({ activity }) => {
 
   const sendUpdateTitle = useCallback(
     (value: string) => {
-      updateActivity(activity.id, value)
+      updateActivity(activity?.id, value)
     },
-    [activity.id]
+    [activity?.id]
   )
 
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -52,7 +52,7 @@ const InputTodo: FC<Props> = ({ activity }) => {
     clearTimeout(timeout)
 
     timeout = setTimeout(() => {
-      updateActivity(activity.id, value)
+      updateActivity(activity?.id, value)
     }, 2000)
   }
 
@@ -94,7 +94,7 @@ const InputTodo: FC<Props> = ({ activity }) => {
           onFocus={focusOn}
           onBlur={focusOff}
           ref={inputRef}
-          value={isInputTouched ? inputTitle : activity.title}
+          value={isInputTouched ? inputTitle : activity?.title}
           onChange={changeHandler}
           maxLength={20}
           className={`bg-inherit focus:shadow-none border-none text-lg md:text-4xl px-0 md:mx-4 focus:border-b-0 ${

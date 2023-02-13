@@ -11,7 +11,7 @@ interface Props {
 const TodoList: FC<Props> = ({ todoItems }) => {
   return (
     <Row className="mt-4 md:mt-10">
-      {todoItems.map((todoItem) => (
+      {todoItems?.map((todoItem) => (
         <CardTodo key={todoItem.id} todoItem={todoItem} />
       ))}
     </Row>

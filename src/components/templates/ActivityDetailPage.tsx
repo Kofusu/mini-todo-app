@@ -13,7 +13,7 @@ interface Props {
 const ActivityDetailPage: FC<Props> = ({ activity }) => {
   const clickHandler = useCallback(() => {}, [])
 
-  if (activity.todo_items.length <= 0) {
+  if (activity?.todo_items.length <= 0) {
     return (
       <BaseContainer>
         <InputTitlePageSection activity={activity} onClick={clickHandler} />
@@ -25,7 +25,7 @@ const ActivityDetailPage: FC<Props> = ({ activity }) => {
   return (
     <BaseContainer>
       <InputTitlePageSection activity={activity} onClick={clickHandler} />
-      <TodoList todoItems={activity.todo_items} />
+      <TodoList todoItems={activity?.todo_items} />
     </BaseContainer>
   )
 }

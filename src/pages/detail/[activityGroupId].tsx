@@ -18,10 +18,6 @@ interface IParams extends ParsedUrlQuery {
 }
 
 const ActivityDetail: NextPage<Props> = ({ activityDetail }) => {
-  const { data: activity, isFetching } = useTodo(
-    activityDetail as ActivityDetailType
-  )
-
   return (
     <>
       <Head>
@@ -31,8 +27,7 @@ const ActivityDetail: NextPage<Props> = ({ activityDetail }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={poppins300.className}>
-        <ActivityDetailPage activity={activity as ActivityDetailType} />
-        {isFetching && <PageLoading />}
+        <ActivityDetailPage activity={activityDetail as ActivityDetailType} />
       </main>
     </>
   )
@@ -50,7 +45,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths: activitiesId,
-    fallback: false,
+    fallback: true,
   }
 }
 
