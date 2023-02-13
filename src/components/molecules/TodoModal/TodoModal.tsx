@@ -6,11 +6,15 @@ interface Props {
   onSubmit: (name: string, prio: string) => void
   onClose?: () => void
   isOpen?: boolean
+  name?: string
+  prior?: string
 }
 
-const TodoModal: FC<Props> = ({ isOpen, onSubmit, onClose }) => {
-  const [inputName, setInputName] = useState<string>('')
-  const [inputPriority, setInputPriority] = useState<string>('very-high')
+const TodoModal: FC<Props> = ({ isOpen, onSubmit, onClose, name, prior }) => {
+  const [inputName, setInputName] = useState<string>(name || '')
+  const [inputPriority, setInputPriority] = useState<string>(
+    prior || 'very-high'
+  )
 
   const inputNameChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setInputName(e.target?.value)
@@ -22,8 +26,8 @@ const TodoModal: FC<Props> = ({ isOpen, onSubmit, onClose }) => {
 
   const submitHandler = () => {
     onSubmit(inputName, inputPriority)
-    setInputName('')
-    setInputPriority('very-high')
+    setInputName(inputName || '')
+    setInputPriority(inputPriority || 'very-high')
   }
 
   return (
@@ -51,4 +55,4 @@ const TodoModal: FC<Props> = ({ isOpen, onSubmit, onClose }) => {
   )
 }
 
-export default memo(TodoModal)
+export default TodoModal

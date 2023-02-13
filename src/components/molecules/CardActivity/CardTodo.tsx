@@ -1,21 +1,33 @@
-import { updateCheckedTodo } from '@/api/todo'
+import { updateCheckedTodo, updateTodo } from '@/api/todo'
 import { CustomCheckbox } from '@/components/atoms/Input'
 import { Title } from '@/components/atoms/Title'
 import { TodoItemsType } from '@/utils/types'
 import { Card, Checkbox, Col } from 'antd'
 import { CheckboxChangeEvent } from 'antd/es/checkbox'
-import React, { FC, useCallback, useState } from 'react'
+import React, { FC, memo, useCallback, useState } from 'react'
 import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
+import { TodoModal } from '../TodoModal'
 
 interface Props {
   todoItem: TodoItemsType
+  refetch: () => void
 }
 
-const CardTodo: FC<Props> = ({ todoItem }) => {
+const CardTodo: FC<Props> = ({ todoItem, refetch }) => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [checkBoxStatus, setCheckboxStatus] = useState<boolean>(
     todoItem.is_active === 0
   )
   const [isTouched, setIsTouched] = useState<boolean>(false)
+
+  const openModal = useCallback(() => {
+    setIsModalOpen(true)
+    console.log('helo')
+  }, [setIsModalOpen])
+
+  const closeModal = useCallback(() => {
+    setIsModalOpen(false)
+  }, [setIsModalOpen])
 
   const changeHandler = useCallback(
     (e: CheckboxChangeEvent) => {
@@ -24,6 +36,16 @@ const CardTodo: FC<Props> = ({ todoItem }) => {
       setIsTouched(true)
     },
     [setCheckboxStatus, setIsTouched, todoItem.id]
+  )
+
+  const submitHandler = useCallback(
+    (name: string, prio: string) => {
+      updateTodo(todoItem?.id, name, prio).then(() => {
+        refetch()
+        closeModal()
+      })
+    },
+    [closeModal, refetch, todoItem?.id]
   )
 
   const getColorPriority = useCallback(() => {
@@ -63,13 +85,23 @@ const CardTodo: FC<Props> = ({ todoItem }) => {
                 checkBoxStatus && 'line-through opacity-50'
               }`}
             />
-            <HiOutlinePencil className="mr-2 text-slate-500 scale-125 md:scale-150 cursor-pointer" />
+            <HiOutlinePencil
+              onClick={openModal}
+              className="mr-2 text-slate-500 scale-125 md:scale-150 cursor-pointer"
+            />
           </div>
           <HiOutlineTrash className="text-slate-400 scale-125 md:scale-150 hover:text-red-500 cursor-pointer" />
         </div>
       </Card>
+      <TodoModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onSubmit={submitHandler}
+        name={todoItem?.title}
+        prior={todoItem?.priority}
+      />
     </Col>
   )
 }
 
-export default CardTodo
+export default memo(CardTodo)

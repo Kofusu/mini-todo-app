@@ -51,7 +51,7 @@ const ActivityDetailPage: FC<Props> = ({ activity, refetch }) => {
   return (
     <BaseContainer>
       <InputTitlePageSection activity={activity} onClick={openModal} />
-      <TodoList todoItems={activity?.todo_items} />
+      <TodoList refetch={refetch} todoItems={activity?.todo_items} />
       <TodoModal
         onSubmit={submitHandler}
         isOpen={isModalOpen}

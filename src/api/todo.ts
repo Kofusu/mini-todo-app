@@ -30,6 +30,22 @@ export const addTodo = (
   })
 }
 
+export const updateTodo = (
+  activityId: number,
+  title: string,
+  priority: string
+) => {
+  return new Promise(async (resolve, reject) => {
+    axios
+      .patch(`${todoEndpoint}/${activityId}`, {
+        title,
+        priority,
+      })
+      .then((res) => resolve(res.data.data))
+      .catch(() => reject(false))
+  })
+}
+
 export const deleteTodo = (activityId: number) => {
   return new Promise(async (resolve, reject) => {
     axios
