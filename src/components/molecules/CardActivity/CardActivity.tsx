@@ -44,7 +44,7 @@ const CardActivity: FC<Props> = ({ activity, onRemove }) => {
         okButtonProps: { className: 'bg-customBlue hover:bg-blue-500' },
       })
     },
-    [activity.id, onRemove]
+    [activity.id, onRemove, activity.title, isModalConfirmOpen]
   )
 
   return (
