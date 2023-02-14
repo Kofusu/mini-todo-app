@@ -80,7 +80,7 @@ const InputTodo: FC<Props> = ({ activity }) => {
   }, [inputRef])
 
   return (
-    <div className="flex items-center justify-between w-full border-slate-400 border-b-2 md:border-b-0 md:mr-8 my-2 md:w-fit">
+    <div className="flex items-center justify-between w-full border-slate-400 border-b-[1px] md:border-b-0 md:mr-8 my-2 md:w-fit">
       <div onClick={displayLoading}>
         <AiOutlineLeft className="md:scale-[2.75] hidden md:inline-block cursor-pointer" />
       </div>
