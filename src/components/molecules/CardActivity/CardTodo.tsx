@@ -98,7 +98,7 @@ const CardTodo: FC<Props> = ({ todoItem, refetch }) => {
               level={3}
               title={todoItem.title}
               className={`text-base md:text-lg mr-2 md:mr-4 overflow-x-hidden whitespace-nowrap max-w-[150px] md:max-w-[250px] ${
-                checkBoxStatus && 'line-through opacity-50'
+                checkBoxStatus && 'line-through dec opacity-50'
               }`}
             />
             <HiOutlinePencil
