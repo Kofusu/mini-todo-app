@@ -34,12 +34,15 @@ const ActivityDetailPage: FC<Props> = ({ activity, refetch }) => {
     [setIsModalOpen, activity?.id, refetch]
   )
 
-  const sortHandler = useCallback((sortType: string) => {
-    switch (sortType) {
-      default:
-        return [...activity?.todo_items]
-    }
-  }, [])
+  const sortHandler = useCallback(
+    (sortType: string) => {
+      switch (sortType) {
+        default:
+          return [...activity?.todo_items]
+      }
+    },
+    [activity?.todo_items]
+  )
 
   if (activity?.todo_items.length <= 0) {
     return (

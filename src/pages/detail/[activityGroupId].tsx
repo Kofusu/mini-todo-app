@@ -1,13 +1,18 @@
 import Head from 'next/head'
-import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 
 import { poppins300 } from '@/fonts/poppinsFont'
 import { getAllActivity, getOneActivity } from '@/api/activity'
 import useTodo from '@/hooks/useTodoList'
 import ActivityDetailPage from '@/components/templates/ActivityDetailPage'
-import { ActivitiesType, ActivityDetailType } from '@/utils/types'
+import {
+  ActivitiesType,
+  ActivityDetailType,
+  NextPageWithLayout,
+} from '@/utils/types'
 import { PageLoading } from '@/components/atoms/PageLoading'
+import { MobileBackHeader } from '@/components/organisms/Header'
 
 interface Props {
   activityDetail: ActivityDetailType
@@ -17,7 +22,7 @@ interface IParams extends ParsedUrlQuery {
   activityGroupId: string
 }
 
-const ActivityDetail: NextPage<Props> = ({ activityDetail }) => {
+const ActivityDetail: NextPageWithLayout<Props> = ({ activityDetail }) => {
   const { data: activityData, refetch, isFetching } = useTodo(activityDetail)
   return (
     <>
@@ -34,6 +39,15 @@ const ActivityDetail: NextPage<Props> = ({ activityDetail }) => {
         />
         {isFetching && <PageLoading />}
       </main>
+    </>
+  )
+}
+
+ActivityDetail.getLayout = (page) => {
+  return (
+    <>
+      <MobileBackHeader />
+      {page}
     </>
   )
 }
