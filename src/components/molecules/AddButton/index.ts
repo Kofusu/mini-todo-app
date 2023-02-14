@@ -1,3 +1,4 @@
 import AddButton from './AddButton'
+import IconButton from './IconButton'
 
-export { AddButton }
+export { AddButton, IconButton }

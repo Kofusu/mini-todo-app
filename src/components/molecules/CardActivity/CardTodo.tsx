@@ -62,7 +62,7 @@ const CardTodo: FC<Props> = ({ todoItem, refetch }) => {
       },
       okButtonProps: { className: 'bg-customBlue hover:bg-blue-500' },
     })
-  }, [refetch])
+  }, [refetch, isModalConfirmOpen, todoItem?.id, todoItem?.title])
 
   const getColorPriority = useCallback(() => {
     switch (todoItem.priority) {
